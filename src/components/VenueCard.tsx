@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Phone, Clock, Star } from 'lucide-react';
+import { MapPin, Phone, Clock, Star, Volume2 } from 'lucide-react';
 import { Venue } from '../types';
 
 interface VenueCardProps {
@@ -7,8 +7,27 @@ interface VenueCardProps {
 }
 
 export const VenueCard: React.FC<VenueCardProps> = ({ venue }) => {
-    // Log the venue information to inspect it
-    console.log('Venue Information:', venue.features);
+  const handleReadAloud = () => {
+    const featureText = venue.features.map(f => translateFeature(f)).join(', ');
+    const openingHoursText = Object.entries(venue.openingHours)
+      .map(([days, hours]) => `${days}: ${hours}`)
+      .join(', ');
+
+    const textToRead = `
+      שם המקום: ${venue.name}.
+      דירוג: ${venue.rating} כוכבים.
+      תיאור: ${venue.description}.
+      כתובת: ${venue.address}.
+      טלפון: ${venue.phone}.
+      שעות פתיחה: ${openingHoursText}.
+      אמצעי נגישות: ${featureText}.
+    `;
+
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    utterance.lang = 'he-IL';
+    window.speechSynthesis.speak(utterance);
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <img
@@ -24,9 +43,16 @@ export const VenueCard: React.FC<VenueCardProps> = ({ venue }) => {
             <span className="font-medium">{venue.rating}</span>
           </div>
         </div>
-        
+
+        <button
+          onClick={handleReadAloud}
+          className="mt-2 flex items-center gap-1 text-blue-600 hover:underline text-sm"
+        >
+          <Volume2 className="w-4 h-4" /> הקרא מידע בקול
+        </button>
+
         <p className="mt-2 text-gray-600">{venue.description}</p>
-        
+
         <div className="mt-4 space-y-2">
           <div className="flex items-center gap-2">
             <MapPin className="w-4 h-4 text-gray-500" />
@@ -47,7 +73,7 @@ export const VenueCard: React.FC<VenueCardProps> = ({ venue }) => {
             </div>
           </div>
         </div>
-        
+
         <div className="mt-4">
           <h4 className="font-medium mb-2">אמצעי נגישות:</h4>
           <div className="flex flex-wrap gap-2">
@@ -80,6 +106,6 @@ function translateFeature(feature: string): string {
     'audio_description': 'תיאור קולי',
     'elevator': 'מעלית נגישה',
   };
-  
+
   return translations[feature] || feature;
 }
