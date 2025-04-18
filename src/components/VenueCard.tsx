@@ -46,9 +46,9 @@ export const VenueCard: React.FC<VenueCardProps> = ({ venue }) => {
 
         <button
           onClick={handleReadAloud}
-          className="mt-2 flex items-center gap-1 text-blue-600 hover:underline text-sm"
+          className="mt-2 flex items-center gap-1 text-blue-600 hover:underline text-lg"
         >
-          <Volume2 className="w-4 h-4" /> הקרא מידע בקול
+          <Volume2 className="w-8 h-8" /> הקרא מידע בקול
         </button>
 
         <p className="mt-2 text-gray-600">{venue.description}</p>

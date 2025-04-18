@@ -79,14 +79,14 @@ function App() {
                 onClick={increaseFontSize}
                 className="flex items-center gap-1 px-3 py-1 bg-[#407093] text-white rounded-md text-sm hover:bg-[#315a73] transition"
               >
-                <ZoomIn className="w-4 h-4" />
+                <ZoomIn className="w-8 h-8" />
                 הגדל פונט
               </button>
               <button
                 onClick={resetFontSize}
                 className="flex items-center gap-1 px-3 py-1 bg-gray-300 text-gray-800 rounded-md text-sm hover:bg-gray-400 transition"
               >
-                <RefreshCcw className="w-4 h-4" />
+                <RefreshCcw className="w-8 h-8" />
                 אפס פונט
               </button>
             </div>
